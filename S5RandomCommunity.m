@@ -1,19 +1,15 @@
 % Generating Null Models
 
 clear all;
-sbj=importdata('E:\VerbGeneration_network\sbj_all_new.txt');
+sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 gamma = 1; omega = 0.4; % Based on Chai et al 2016 CC
 
 parfor t=1:length(sbj)
     X=load(['E:\VerbGeneration_network\5tDecomposedSignals\' sbj{t} '.mat'],'D2');
-%     d=importdata(['E:\VerbGeneration_network\5ROISignals\' sbj{t} '.txt']);
     pathD=['E:\VerbGeneration_network\8RandomCommunity\' sbj{t} '.mat'];
     
     % Connectional Null Model
-	ConnectionalNullModel(pathD,X.D2,gamma,omega);
-	
-	% Temporal Null Model
-    TempNullModel(pathD,X.D2,gamma,omega);
+    ConnectionalNullModel(pathD,X.D2,gamma,omega);
 
     % Nodal Null Model
     NodalNullModel(pathD,X.D2,gamma,omega);
@@ -65,50 +61,6 @@ if exist(pathD,'file')
 delete(pathD);
 end
 save(pathD,'Qcr','Scr');
-end
-
-% Temporal Null Model
-function TempNullModel(pathD,d,gamma,omega)
-% Creating adjacency matrix over time: Window Size = 40 sec (14 windows, 8=half-window)/30 sec (19 windows, 6=half-window)/1 min (9 windows, 12=half-window;
-% Overlapping = 50% with matlab new wavelet coherence
-SampRate=1/2.5;
-for i=1:14
-    clear At;
-    for k=1:16
-        for kk=1:16
-            clear wcoh f;
-            [wcoh,~,f] = wcoherence(d(((i-1)*8+1):(i+1)*8,k),d(((i-1)*8+1):(i+1)*8,kk),SampRate);
-            At(k,kk)=mean(mean(wcoh(find(f>0.05 & f<0.1),:)));
-            clear wcoh f;
-        end
-    end
-    At=round(At.*1000000)./1000000;
-    A{i,1}=At;
-    clear At;
-end
-% Creating 100 null models
-for k=1:100
-    clear rd Atr tt;
-    % randomise temporally
-    rd=randperm(14);
-    for tt=1:14
-        Atr{tt,1}=A{rd(tt)};
-    end
-    for ii=1:100 % 100 times of optimization
-        clear N T B mm PP St;
-        N=length(Atr{1});
-        T=length(Atr);
-        [B,mm] = multiord(Atr,gamma,omega);
-        PP = @(S) postprocess_ordinal_multilayer(S,T);
-        [St,Qtr(ii,k),~] = iterated_genlouvain(B,10000,0,1,'moverandw',[], PP); % tobe saved (Qtr)
-        Qtr(ii,k)=Qtr(ii,k)/mm;
-        St = reshape(St, N, T);
-        Str(:,:,ii,k)=St';% tobe saved Str
-        clear N T B mm PP St;
-    end
-    clear rd Atr tt;
-end
-save(pathD,'Qtr','Str','-append');
 end
 
 % Nodal Null Model
