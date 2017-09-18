@@ -1,8 +1,7 @@
 % Calculate the LI for Activation in two ways
 % Fuction: (L-R)/(L+R)
 clear all;
-sbj=importdata('E:\VerbGeneration_network\sbj_add.txt');
-% sbj=importdata('E:\VerbGeneration_network\sbj_RH_updated.txt');
+sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 maskname = importdata('E:\VerbGeneration_network\ROIs_LI.txt');
 for i=1:length(sbj)
     i
@@ -41,10 +40,6 @@ for i=1:length(sbj)
         clear out;
     end
 end
-% save('E:\VerbGeneration_network\4tLIofActivation\LI_ind.mat','LI_ind');
-% save('E:\VerbGeneration_network\4tLIofActivation\LI_ind_RH.mat','LI_ind');
-
-
 
 
 
@@ -53,7 +48,7 @@ end
 % % Build ROIs
 % % Create individual ROI for left/right frontal, left/right temporal, and left/right hemisphere
 % clear all;
-% sbj=importdata('E:\VerbGeneration_network\sbj_add.txt');
+% sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 % for i=1:length(sbj)
 %     if exist(['E:\VerbGeneration_network\4tLI_ROIs\'  sbj{i} '\'],'dir')==7
 %         rmdir(['E:\VerbGeneration_network\4tLI_ROIs\'  sbj{i} '\'],'s');
