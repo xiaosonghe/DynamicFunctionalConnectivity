@@ -1,6 +1,6 @@
 % Detecting the maximam number of communities
 clear all;
-sbj=importdata('E:\VerbGeneration_network\sbj_RH_final.txt');
+sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 for t=1:length(sbj)
     clear A Q S St;
     load(['E:\VerbGeneration_network\6CommunityMatrix\' sbj{t} '.mat']);
@@ -20,7 +20,7 @@ p=anova1(Sm,group)
 
 % Q
 clear all;
-sbj=importdata('E:\VerbGeneration_network\sbj_RH_final.txt');
+sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 for t=1:length(sbj)
     clear Q;
     load(['E:\VerbGeneration_network\6CommunityMatrix\' sbj{t} '.mat'],'Q');
@@ -34,7 +34,7 @@ p=anova1(Qt,group)
 
 % Flexibility
 clear all;
-sbj=importdata('E:\VerbGeneration_network\sbj_RH_final.txt');
+sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 for t=1:length(sbj)
     clear F;
     load(['E:\VerbGeneration_network\7ModularityMeasures\' sbj{t} '.mat'],'F');
@@ -62,13 +62,6 @@ for i=1:4
 p(i)=anova1(F(:,i),group,'off');
 pr(i)=anova1(Fr(:,i),group,'off');
 end
-
-
-
-
-
-
-
 
 for i=1:16
 p(i)=anova1(Ft(:,i),group,'off');
