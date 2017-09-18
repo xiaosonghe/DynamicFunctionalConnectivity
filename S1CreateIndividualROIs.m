@@ -1,6 +1,6 @@
 % Create individual masks and convert to .mat format
 clear all;
-sbj=importdata('E:\VerbGeneration_network\sbj_add.txt');
+sbj=importdata('E:\VerbGeneration_network\sbj.txt');
 ROI=importdata('E:\VerbGeneration_network\ROIs.txt');
 for t=1:length(sbj)
     if exist(['E:\VerbGeneration_network\4IndividualROIs\'  sbj{t} '\'],'dir')==7
