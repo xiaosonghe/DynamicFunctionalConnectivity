@@ -6,10 +6,10 @@ System=[1;1;1;2;2;2;2;2;3;3;3;4;4;4;4;4];% Define System for LI and I, R calcula
 parfor t=1:length(sbj)
     X=load(['E:\VerbGeneration_network\6CommunityMatrix\' sbj{t} '.mat']);
     pathD=['E:\VerbGeneration_network\7ModularityMeasures\' sbj{t} '.mat'];
-    ModularityMeasures(C,System,X.S,X.A,pathD);
+    ModularityMeasures(System,X.S,X.A,pathD);
 end
 
-function ModularityMeasures(C,System,SO,A,pathD)
+function ModularityMeasures(System,SO,A,pathD)
 for ii=1:100
     MA(:,:,ii)=allegiance(SO(:,:,ii));% Module Allegiance
     F(ii,:)=flexibility(SO(:,:,ii));% Flexibility
